@@ -16,10 +16,15 @@ namespace FinalWebAPI.Controllers
             _context = context;
         }
 
-        [HttpGet("{id?}")]
-        public async Task<ActionResult<IEnumerable<TeamMember>>> Get(int? id)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TeamMember>>> GetAll() {
+            return Ok(await _context.TeamMembers.Take(5).ToListAsync());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<TeamMember>>> Get(int id)
         {
-            if (id == null || id == 0)
+            if (id == 0)
             {
                 return Ok(await _context.TeamMembers.Take(5).ToListAsync());
             }
